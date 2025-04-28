@@ -12,7 +12,7 @@ Tool can be used for checking device RDRAND capability, access to hardware imple
 
 Technical Details: 
 
-Peculiarity of this implementation is usage of same divisor exponent, that extends range to boundary. 
+Peculiarity of this implementation is usage of same divisor exponent, that extends range to boundary. Using the remaining 'exponent' bits of the source for the mantissa tail after normalization did not show any influence on correlation. These bits can be stored and potentially reused in more advanced versions.
 
 Main conversion loop:
 
