@@ -1,2 +1,29 @@
 # HWRND
-RD-RAND provider for IEEE 754 double 
+RD-RAND provider for IEEE 754 double.
+
+Shell command line tool to generate sequence of floats in range [-0.5:+0.5]. Calling generates RDRAND.JSON in executable folder.
+
+Usage: HWRND.exe [Steps]
+
+Implementation uses hardware RDRAND for setting 52 bit mantissa and sign of double. Normalisation is implemented by division. Not all source bits used. 
+Preliminary distribution quality can be controlled in console report: Average, Correlation, Pearson coefficient.
+
+Tool can be used for checking device RDRAND capability, access to hardware implemented by _rdrand64_step(&t) in <immintrin.h>
+
+Technical Details: 
+
+Peculiarity of this implementation is usage of same divisor exponent, that extends range to boundary. 
+
+Main conversion loop:
+
+{ d /= n; d -= h; *dp = *sp | *dp; } //normalise, shift, sign
+
+dp=&d, sp=&m; //initial double values are set through integer pointers
+
+nh = 0x432FFFFFFFFFFFFFULL; //devisor in Hex
+
+hh = 0x3FE0000000000000ULL; //shift in Hex
+
+Sign is obtained as major bit of 64 bit RDRAND integer. 
+
+Project developped in MS VS 2022 Community, C++ console, Windows x64. Executable relies on MSVC runtime libraries; ensure they are installed or redistribute them according to Microsoft's licensing terms.
