@@ -1,0 +1,8 @@
+﻿  HWRNG.cpp
+D:\Users\Hill\Projects\Compressor\.Dev\HWRNG\HWRNG\HWRNG.cpp(36,38): warning C4101: 'e': unreferenced local variable
+  Generating code
+  1 of 228 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  HWRNG.vcxproj -> D:\Users\Hill\Projects\Compressor\.Dev\HWRNG\x64\Release\HWRNG.exe

@@ -1,0 +1,3 @@
+﻿  HWRNG.cpp
+D:\Users\Hill\Projects\Compressor\.Dev\HWRNG\HWRNG\HWRNG.cpp(73,21): warning C4101: 'e': unreferenced local variable
+  HWRNG.vcxproj -> D:\Users\Hill\Projects\Compressor\.Dev\HWRNG\x64\Debug\HWRNG.exe
