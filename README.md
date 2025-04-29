@@ -7,7 +7,14 @@ Usage:
            
            HWRNG.exe [Steps]
            
-           HWRNG.exe [Steps] [Any_Value], to supress key waiting
+           HWRNG.exe [Steps] [Any_Value], to suppress key waiting
+
+Details:
+           
+           If no parameters are provided, the JSON file contains 100 doubles (approximately 2KB in size).
+
+           Program returns immidiately if RDRAND is not detected, use HWRNG.cmd to view console messages.
+
 
 Implementation uses hardware RDRAND for setting 52 bit mantissa and sign of double. Normalisation is implemented by division. Not all source bits used. 
 Preliminary distribution quality can be controlled in console report: Average, Correlation, Pearson coefficient.
