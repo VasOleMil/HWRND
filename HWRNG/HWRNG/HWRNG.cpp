@@ -38,10 +38,6 @@ main(int argc, char* argv[])
             std::cerr << "Error: Invalid number of steps. Using default: " << s << std::endl;
         }
     }
-    else
-    {
-        std::cout << "Default steps, changes using: HWRNG.exe [Steps]" << std::endl;
-    }   
     
     // Test RDRAND support and generate test number
     if (TRDRAND())
@@ -147,7 +143,8 @@ main(int argc, char* argv[])
     sz = (sz == 0.0F) ? 1.0F : sz;      //zero safe
     a /= (c > 0) ? ((double)c) : 1.0F;  //zero safe
 
-    P = (c > 1) ? (Q / sqrt((c - 1) / (c + 1) * sd * sz)) : 0.0F;
+    P = (c > 1) ? ((double)(c - 1)) / (c + 1) : 0.0F;
+    P = (Q / sqrt(P* sd * sz));
     
     // Certificate supply
     std::cout << "Steps:\t\t" << s << std::endl;
@@ -171,7 +168,17 @@ main(int argc, char* argv[])
     //std::cout << "eh\t" << std::bitset<64>(eh) << std::endl;
     //std::cout << "nh\t" << std::bitset<64>(nh) << std::endl;
     
-    std::cout << "Press sny key to continue..." << _getch();
+    if (argc == 1)
+    {
+        std::cout << "\nDefault steps, changes using:" << std::endl;
+        std::cout << "\tHWRNG.exe [Steps]" << std::endl;
+        std::cout << "\tHWRNG.exe [Steps] [Any Value], to supress key waiting" << std::endl; 
+        std::cout << "\nPress any key to continue..." << std::endl; _getch();
+    }
+    else if (argc < 3) // Key wait if no suppression flag is provided
+    {
+        std::cout << "\nPress any key to continue..." << std::endl; _getch();
+    }
 
     return 0;
 }
