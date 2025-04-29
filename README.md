@@ -3,7 +3,9 @@ RD-RAND provider for IEEE 754 double.
 
 Shell command line tool to generate sequence of floats in range [-0.5:+0.5]. Calling generates RDRAND.JSON in executable folder.
 
-Usage: HWRNG.exe [Steps]
+Usage: 
+           HWRNG.exe [Steps]
+           HWRNG.exe [Steps] [Any_Value], to supress key waiting
 
 Implementation uses hardware RDRAND for setting 52 bit mantissa and sign of double. Normalisation is implemented by division. Not all source bits used. 
 Preliminary distribution quality can be controlled in console report: Average, Correlation, Pearson coefficient.
@@ -12,7 +14,7 @@ Tool can be used for checking device RDRAND capability, access to hardware imple
 
 Technical Details: 
 
-Peculiarity of this implementation is usage of same divisor exponent, that extends range to boundary. Using the remaining 'exponent' bits of the source for the mantissa tail after normalization did not show any influence on correlation. These bits can be stored and potentially reused in more advanced versions.
+Peculiarity of this implementation is usage of same divisor exponent, that extends range to boundary. Using the remaining ten 'exponent' bits [53-62] of the source for the mantissa tail after normalization - did not show any influence on correlation. These bits can be stored and potentially reused in more advanced versions.
 
 Main conversion loop:
 
@@ -20,10 +22,11 @@ Main conversion loop:
 
 { d *= (t != (r & t)); } //zero case, probability 2^(-53)
            
+Variable values:
 
 dp=&d, sp=&m; //initial double values are set through integer pointers
 
-t = 0x1FFFFFFFFFFFFF; //zero mask and value, bit 53
+t = 0x1FFFFFFFFFFFFF; //zero mask and value, bit 52
 
 nh = 0x432FFFFFFFFFFFFFULL; //devisor in Hex
 
