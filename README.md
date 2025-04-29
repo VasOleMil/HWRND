@@ -4,7 +4,9 @@ RD-RAND provider for IEEE 754 double.
 Shell command line tool to generate sequence of floats in range [-0.5:+0.5]. Calling generates RDRAND.JSON in executable folder.
 
 Usage: 
+           
            HWRNG.exe [Steps]
+           
            HWRNG.exe [Steps] [Any_Value], to supress key waiting
 
 Implementation uses hardware RDRAND for setting 52 bit mantissa and sign of double. Normalisation is implemented by division. Not all source bits used. 
