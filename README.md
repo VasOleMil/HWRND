@@ -3,7 +3,7 @@ RD-RAND provider for IEEE 754 double.
 
 Shell command line tool to generate sequence of floats in range [-0.5:+0.5]. Calling generates RDRAND.JSON in executable folder.
 
-Usage: HWRND.exe [Steps]
+Usage: HWRNG.exe [Steps]
 
 Implementation uses hardware RDRAND for setting 52 bit mantissa and sign of double. Normalisation is implemented by division. Not all source bits used. 
 Preliminary distribution quality can be controlled in console report: Average, Correlation, Pearson coefficient.
@@ -18,12 +18,19 @@ Main conversion loop:
 
 { d /= n; d -= h; *dp = *sp | *dp; } //normalise, shift, sign
 
+{ d *= (t != (r & t)); } //zero case, probability 2^(-53)
+           
+
 dp=&d, sp=&m; //initial double values are set through integer pointers
+
+t = 0x1FFFFFFFFFFFFF; //zero mask and value, bit 53
 
 nh = 0x432FFFFFFFFFFFFFULL; //devisor in Hex
 
 hh = 0x3FE0000000000000ULL; //shift in Hex
 
 Sign is obtained as major bit of 64 bit RDRAND integer. 
+
+
 
 Project developped in MS VS 2022 Community, C++ console, Windows x64. Executable relies on MSVC runtime libraries; ensure they are installed or redistribute them according to Microsoft's licensing terms.
