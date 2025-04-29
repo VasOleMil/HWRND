@@ -95,9 +95,9 @@ main(int argc, char* argv[])
     dp = (unsigned long long*) & d; *dp = eh | (mh & t);//link rest, save t rest
     
     //Process generaeted by test value, init saved values
-    { d /= n; d -= h; *dp = *sp | *dp; } { z = d; zz = d * d; }
+    { d /= n; d -= h; *dp = *sp | *dp; } { zz = d * d; z = d; }
     //write processed value to file
-    Fs << std::fixed << std::setprecision(Pr) << d << ",";
+    Fs << std::fixed << std::setprecision(Pr) << d; if (s > 1) Fs << ",";
 
     t = 0x1FFFFFFFFFFFFF; //Zero Mask and Value case, bit 53
     long i, c = 0; Q = 0.0F; a = 0.0F; sd = sz = 0.0F;
@@ -114,7 +114,7 @@ main(int argc, char* argv[])
             //Zero case, probability 2^(-53)
             d *= (t != (r & t));
 
-            //Usign rest exponent bits for tail
+            //Usign rest [63-53] exponent bits for tail
             //t = (r & 0x7FE0000000000000ULL) >> 53;
             //*dp = t | (*dp & 0xFFFFFFFFFFFFFC00ULL);
             
@@ -157,6 +157,10 @@ main(int argc, char* argv[])
     std::cout << "Q:\t\t" << Q << std::endl;
     std::cout << "P:\t\t" << P << std::endl;
 
+    //Test edge covering by division
+    //*dp = nh; c = (d / n - 1.0F == 0.0F);
+    //std::cout << "(d/n)-1 == 0 :\t" << c << std::endl;
+    
     //Developer handies, hex visual examinantion
     
     //d = 0xFFFFFFFFFFFFF; //unit mantissa expeted
