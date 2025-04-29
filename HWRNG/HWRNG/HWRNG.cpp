@@ -99,8 +99,10 @@ main(int argc, char* argv[])
     //write processed value to file
     Fs << std::fixed << std::setprecision(Pr) << d << ",";
 
+    t = 0x1FFFFFFFFFFFFF; //Zero Mask and Value case, bit 53
     long i, c = 0; Q = 0.0F; a = 0.0F; sd = sz = 0.0F;
-
+    
+    
     for (i = 2; i <= s; i++)
     {
         if (_rdrand64_step(&r)) //<immintrin.h>
@@ -109,7 +111,13 @@ main(int argc, char* argv[])
             *dp = eh | (mh & r);//save rest in d
             //normalise, shift, sign
             d /= n; d -= h; *dp =  *sp | *dp;
+            //Zero case, probability 2^(-53)
+            d *= (t != (r & t));
 
+            //Usign rest exponent bits for tail
+            //t = (r & 0x7FE0000000000000ULL) >> 53;
+            //*dp = t | (*dp & 0xFFFFFFFFFFFFFC00ULL);
+            
             // Copilot version, tested on bias:
             // Normalize to [0,1] using all 52 bits
             // d = (r & 0xFFFFFFFFFFFFF) / (double)(1ULL << 52);
