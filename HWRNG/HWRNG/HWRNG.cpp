@@ -141,13 +141,13 @@ main(int argc, char* argv[])
     
     // Certificate prepare
     // Thus at c = 0, test value processed: 
-    // ((c-1)/c) -> (c+1)/c for sz
+    // ((c-1)/c) -> c/(c+1) for sz
     // ((c-1)/c) for sd, previus selection is unit greater
     sd = (sd == 0.0F) ? 1.0F : sd;      //zero safe
     sz = (sz == 0.0F) ? 1.0F : sz;      //zero safe
     a /= (c > 0) ? ((double)c) : 1.0F;  //zero safe
 
-    P = (c > 1) ? (Q / sqrt((c + 1) / (c - 1) * sd * sz)) : 0.0F;
+    P = (c > 1) ? (Q / sqrt((c - 1) / (c + 1) * sd * sz)) : 0.0F;
     
     // Certificate supply
     std::cout << "Steps:\t\t" << s << std::endl;
